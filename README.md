@@ -142,7 +142,7 @@ Found support for locale: [zh_TW]
 
 Запуск: `java org.apache.derby.tools.dblook -d jdbc:derby:$DERBY_INSTALL/demo/databases/toursdb`
 
-```derby
+```sql
 -- Timestamp: 2022-05-03 22:52:47.13
 -- Source database is: /opt/Apache/db-derby-10.15.2.0-bin/demo/databases/toursdb
 -- Connection URL is: jdbc:derby:/opt/Apache/db-derby-10.15.2.0-bin/demo/databases/toursdb
@@ -221,11 +221,11 @@ CREATE TRIGGER "APP"."TRIG2" AFTER DELETE ON "APP"."FLIGHTS" FOR EACH STATEMENT 
 
 ### _Примеры запросов_
 * Создание схемы
-```derby
+```sql
 create schema hw4_derby;
 ```
 * Создание таблицы
-```derby
+```sql
 -- CREATE TABLE table_name (
 --    column_name1 column_data_type1 constraint (optional),
 --    column_name2 column_data_type2 constraint (optional),
@@ -240,7 +240,7 @@ create table hw4_derby.first_table(
 );
 ```
 * Вставка данных
-```derby
+```sql
 -- INSERT INTO table_name VALUES (column_name1, column_name2, ...);
 
 insert into hw4_derby.first_table(name, salary, birthdate) values ('Linus', 1000000.0, '1969-12-28');
@@ -250,7 +250,7 @@ insert into hw4_derby.first_table(name, salary, birthdate) values ('Dima', 37000
 insert into hw4_derby.first_table(name, salary, birthdate) values ('Mark', 120000.0, '2001-11-07');
 ```
 * Вывод содержимого таблицы
-```derby
+```sql
 select * from hw4_derby.first_table;
 ```
 | ID | NAME | SALARY | BIRTHDATE |
@@ -261,7 +261,7 @@ select * from hw4_derby.first_table;
 | 4 | Dima | 370000 | 2001-01-18 |
 | 5 | Mark | 120000 | 2001-11-07 |
 * Добавление столбца
-```derby
+```sql
 -- ALTER TABLE table_name ADD COLUMN column_name column_type;
 
 alter table hw4_derby.first_table add column height int;
@@ -274,13 +274,13 @@ alter table hw4_derby.first_table add column height int;
 | 4 | Dima | 370000 | 2001-01-18 | NULL |
 | 5 | Mark | 120000 | 2001-11-07 | NULL |
 * Удаление столбца
-```derby
+```sql
 -- ALTER TABLE table_name DROP COLUMN column_name;
 
 alter table hw4_derby.first_table drop column height;
 ```
 * Обновление данных
-```derby
+```sql
 -- UPDATE table_name
 --    SET column_name = value, column_name = value, ...
 --    WHERE conditions;
@@ -295,13 +295,13 @@ update hw4_derby.first_table set salary = 50.5 where birthdate < '1900-01-01';
 | 4 | Dima | 370000 | 2001-01-18 |
 | 5 | Mark | 120000 | 2001-11-07 |
 * Удаление данных
-```derby
+```sql
 -- DELETE FROM table_name WHERE condition;
 
 delete from hw4_derby.first_table where salary > 500000.0;
 ```
 * Удаление таблицы
-```derby
+```sql
 -- DROP TABLE table_name;
 
 drop table hw4_derby.first_table;
@@ -310,7 +310,7 @@ drop table hw4_derby.first_table;
 
 ### _Пример select запроса к демобазе tourdb_
 Все самолёты вылетающие из аэропортов ('ABQ', 'LAX', 'PHX') и пролетающие в среднем больше 1000 миль за перелёт
-```derby
+```sql
 select AIRCRAFT, avg(MILES) as avg_miles, min(MILES) as min_miles, max(MILES) as max_miles from APP.FLIGHTS
 where ORIG_AIRPORT in ('ABQ', 'LAX', 'PHX', 'AKL', 'JFK')
 group by AIRCRAFT
@@ -378,12 +378,12 @@ public class WhereClauseExample {
 ### _Типы индексов_
 
 * Обычный индекс
-```derby
+```sql
 create index salary_index on hw4_derby.first_table (salary);
 ```
 * Индекс с запретом дублирования - после создания unique индекса на столбец при попытке добавить в этот столбец 
 повторяющееся значение получим ошибку
-```derby
+```sql
 create unique index name_index on hw4_derby.first_table (name);
 
 insert into hw4_derby.first_table(name, salary, birthdate) values ('Mark', 42.42, '2042-04-07');
@@ -392,7 +392,7 @@ insert into hw4_derby.first_table(name, salary, birthdate) values ('Mark', 42.42
 -- or primary key constraint or unique index identified by 'NAME_INDEX' defined on 'FIRST_TABLE'.
 ```
 * Композитный индекс
-```derby
+```sql
 create index salary_birth_index on hw4_derby.first_table (salary, birthdate);
 ```
 
